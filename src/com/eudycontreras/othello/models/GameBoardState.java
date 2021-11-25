@@ -185,8 +185,10 @@ public class GameBoardState {
 	 * @return
 	 */
 	public long getStaticScore(BoardCellState state){
+
 		return (gameBoard.getCount(state) - gameBoard.getCount(GameTreeUtility.getCounterState(state)));
 	}
+
 
 	/**
 	 * Returns the board size 

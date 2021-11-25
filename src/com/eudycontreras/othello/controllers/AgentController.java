@@ -77,7 +77,6 @@ public class AgentController {
 	private static final int[][] WEIGHT_MATRIX_4X4 = { 
 			{ A, G, G, A},
 			{ G, H, H, G},
-			{ B, F, F, B},
 			{ G, H, H, G},
 			{ A, G, G, A},};
 	
@@ -250,6 +249,135 @@ public class AgentController {
 		return new MoveWrapper(randomMove);
 	}
 
+	private static int depthCounter = 0;
+/*
+	public static MoveWrapper findMove(GameBoardState currentState, PlayerTurn turn) {
+		List<ObjectiveWrapper> agentMoves = getAvailableMoves(currentState, turn);
+		PlayerTurn nextTurn = PlayerTurn.PLAYER_ONE;
+		if (turn == PlayerTurn.PLAYER_ONE) { nextTurn = PlayerTurn.PLAYER_TWO; }
+
+
+		for (int i = 0; i < agentMoves.size(); i++) {
+			findMove(currentState.getChildStates().get(i), nextTurn);
+			depthCounter++;
+		}
+
+		if (turn.equals(PlayerTurn.PLAYER_ONE)) {
+			int maxEva = Integer.MIN_VALUE;
+			for (int i = 0; i < agentMoves.size(); i++) {
+				GameBoardState state = agentMoves.get(i). ;
+				MoveWrapper eva = findMove(agentMoves.get(i)., PlayerTurn.PLAYER_TWO);
+			}
+		}
+
+		else {
+
+		}
+
+
+		return null;
+	}
+
+	public static MoveWrapper findMinimaxMove(GameBoardState currentState, PlayerTurn turn) {
+		int highestScore = Integer.MIN_VALUE;
+
+		//Retrieves and stores all moves for specified player given the current state of the game
+		List<ObjectiveWrapper> agentMoves = getAvailableMoves(currentState, turn);
+
+		//Stores the moves the adversary of the specified player
+		List<ResultWrapper> adversaryMoves = new LinkedList<>();
+
+		//Checks if the specified player has no moves and if not it simply returns an empty move wrapper
+		if(agentMoves.isEmpty()){
+			return new MoveWrapper(null);
+		}
+
+		//Chooses the first available move as the reference move.
+		ObjectiveWrapper chosen = agentMoves.get(0);
+
+		//Loops through all the moves in order to find the safest move
+		for(ObjectiveWrapper agentMove : agentMoves){
+
+			//Creates a state base on the current state and the current move being looped through
+			GameBoardState agentMoveState = getNewState(currentState, agentMove);
+
+			//Stores the available moves for the adversary
+			List<ObjectiveWrapper>  adversaryMovesTemp = getAvailableMoves(agentMoveState, GameTreeUtility.getCounterPlayer(turn));
+
+			//Loops through all the adversary moves in order to perform a score calculation
+			//This is made to check if the resulting agent move lead to a high adversary profit or not
+			for(ObjectiveWrapper adversaryMove : adversaryMovesTemp){
+
+				//Stores the state created by the current adversary moves
+				GameBoardState adversaryMoveState = getNewState(agentMoveState, adversaryMove);
+
+
+				GameBoardCell cell = adversaryMove.getCurrentCell(); //Den ruta som draget
+
+				 if (WEIGHT_MATRIX[cell.getCol()][cell.getRow()] > highestScore) {
+				 	chosen = agentMove;
+				 }
+				//The score of the agent given the current adversary move state
+				long agentScore = adversaryMoveState.getStaticScore(BoardCellState.WHITE);
+
+				//The score of the adversary given the current adversary move state
+				long adversaryScore = adversaryMoveState.getStaticScore(BoardCellState.BLACK);
+
+				//Checks if the score of the adversary is lower
+				//If so and the total value gain from the current move is higher
+				//than the value of the currently chosen move this new move is then chosen
+				if(adversaryScore < agentScore){
+
+					//If the total gain of the chosen move is less than the current move, the current move is then chosen
+					if(chosen.getPath().size() <= agentMove.getPath().size()){
+
+						//chosen = agentMove;
+					}
+				}
+
+			}
+
+			//Gets the best move that the adversary can make given the current state
+			ObjectiveWrapper bestMove = getBestMove(agentMoveState, GameTreeUtility.getCounterPlayer(turn));
+
+			if(bestMove == null){
+				continue;
+			}
+
+			//The best move is then added to the list of adversary moves as a result
+			adversaryMoves.add(new ResultWrapper(turn, agentMoveState, bestMove, agentMove));
+
+		}
+
+		//Returns best move if adversary has no move
+		if(adversaryMoves.isEmpty()){
+			return findBestMove(currentState,turn);
+		}
+
+		//Sorts the adversary moves in reversed order given the total reward of the move of the agent
+		Collections.sort(adversaryMoves, Collections.reverseOrder(ResultWrapper.AGENT_REWARD_COMPARATOR));
+
+		//Deals with unconventional states
+		if(adversaryMoves.get(0).getAgentMove() == null || adversaryMoves.get(0).getHumanMove() == null){
+			return findBestMove(currentState,turn);
+		}
+		if(nullOrEmpty(adversaryMoves.get(0).getAgentMove().getPath()) || nullOrEmpty(adversaryMoves.get(0).getHumanMove().getPath())){
+			return findBestMove(currentState,turn);
+		}
+
+		//If in the context of the worst move of the adversary the resulting move the of agent has a lesser
+		//reward than the resulting move of the adversary the adversary moves are re-sorted using the adversary
+		//reward comparator.
+		if(adversaryMoves.get(0).getAgentMove().getPath().size() <= adversaryMoves.get(0).getHumanMove().getPath().size()){
+
+			Collections.sort(adversaryMoves, ResultWrapper.HUMAN_REWARD_COMPARATOR);
+		}
+
+		//Returns a move wrapper containing the move of the agent that was
+		//a result of the worst move of the adversary
+		return new MoveWrapper(adversaryMoves.get(0).getAgentMove());
+	}
+
 	/**
 	 * Example method which shows a greedy safe move finder algorithm: One step lookahead
 	 * @param currentState : The current state of the game
@@ -257,7 +385,9 @@ public class AgentController {
 	 * @return : The safest move possible given a one step lookahead
 	 */
 	public static MoveWrapper findSafeMove(GameBoardState currentState, PlayerTurn turn) {
-			
+		System.out.println("findSafeMove");
+
+
 		//Retrieves and stores all moves for specified player given the current state of the game
 		List<ObjectiveWrapper> agentMoves = getAvailableMoves(currentState, turn);
 		
@@ -274,7 +404,7 @@ public class AgentController {
 
 		//Loops through all the moves in order to find the safest move
 		for(ObjectiveWrapper agentMove : agentMoves){
-			
+
 			//Creates a state base on the current state and the current move being looped through
 			GameBoardState agentMoveState = getNewState(currentState, agentMove);
 			
@@ -395,6 +525,15 @@ public class AgentController {
 			}
 		}
 		return longest;
+	}
+
+	//Oscars testgrejer:
+	//Först måste getAvailableMoves kallas och därefter kallas igen för varje move i första anropet.
+	private static ObjectiveWrapper getRealBestMove(List<ObjectiveWrapper> moves) {
+		if(moves.isEmpty()){
+			return ObjectiveWrapper.NONE;
+		}
+		return moves.get(0);
 	}
 	
 	/**
