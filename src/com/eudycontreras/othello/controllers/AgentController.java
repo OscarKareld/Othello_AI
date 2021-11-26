@@ -32,6 +32,7 @@ import static main.UserSettings.G;
 import static main.UserSettings.H;
 
 import javafx.application.Platform;
+import main.SuperMove;
 import main.UserSettings;
 
 /**
@@ -136,16 +137,14 @@ public class AgentController {
 				}
 			}
 			return agentOne;
-		
 		}
 	}
 
-	
 	public synchronized void makeMove(GameBoard gameBoard) {
 		makeMove(PlayerTurn.PLAYER_ONE, gameBoard);
 	}
 	
-	public synchronized void makeMove(PlayerTurn agentTurn, GameBoard gameBoard) {
+	public synchronized void makeMove(PlayerTurn agentTurn, GameBoard gameBoard) { // Denna används när agenten gör sitt första drag
 
 		if(othello.getGameController().isGamePaused()){
 			return;
@@ -153,10 +152,9 @@ public class AgentController {
 		
 		Agent agent = getAgent(agentTurn);
 		
-		
 		GameBoardState root = gameBoard.getGameState();
 
-		switch(agentTurn){
+		switch(agentTurn){  // Ändrar i gameBoard beroende på vems tur det är
 		case PLAYER_ONE:
 			root.setPlayerTurn(BoardCellState.WHITE);
 			break;
@@ -167,18 +165,22 @@ public class AgentController {
 			break;
 			
 		}
-		
+
 		ThreadManager.execute(()->{
-			
-			AgentMove move = agent.getMove(root);
-			
-			othello.getGameController().passInformation(
-					agent.getSearchDepth(),
-					agent.getReachedLeafNodes(), 
+			// Hit kommer man varje gång agenten gör ett drag
+
+			AgentMove move = agent.getMove(root); // SuperAgent och SuperMove returnerar ett AgentMove-objekt=move
+			System.out.println("move="+move);
+
+			SuperMove thisMove=(SuperMove) move;
+			System.out.println(thisMove.getScore());
+
+			othello.getGameController().passInformation(  // Skickar info för att uppdatera GUI? Uppdateras inte
+					agent.getSearchDepth(),				  // eftersom set-metoderna aldrig används är värdena noll
+					agent.getReachedLeafNodes(),
 					agent.getPrunedCounter(), 
 					agent.getNodesExamined());
-			
-			
+
 			if(OthelloSettings.DEBUG_GAME){
 				System.out.println("SEARCH DEPTH: " + agent.getSearchDepth());
 				System.out.println("TOTAL NODES PRUNED: " + agent.getPrunedCounter());
@@ -186,12 +188,13 @@ public class AgentController {
 				System.out.println("TOTAL NODES EXAMINED: " + agent.getNodesExamined());
 				System.out.println();
 			}
-				
+
 			agent.resetCounters();
 
 			Platform.runLater(() -> {
 				if(move != null){
 					othello.getGameController().setAgentMove(agentTurn,move);
+					System.out.println("ute på andra sidan?");
 				}
 			});
 		});
@@ -205,17 +208,27 @@ public class AgentController {
 	public static MoveWrapper getExampleMove(GameBoardState gameState) {
 		return getExampleMove(gameState, PlayerTurn.PLAYER_ONE);
 	}
+
+	/**
+	 * Method for MiniMaxMove
+	 * @param state
+	 * @return
+	 */
+	public static MoveWrapper getMiniMaxMove(GameBoardState state) {
+
+		return null;
+	}
 	
 	public static MoveWrapper getExampleMove(GameBoardState gameState, PlayerTurn playerTurn) {
 		int value = new Random().nextInt(3);
 		
-		if(value == 0){
-			return AgentController.findBestMove(gameState, playerTurn);
-		}else if(value == 1){
-			return AgentController.findSafeMove(gameState, playerTurn);
-		}else if(value == 3){
-			return AgentController.findRandomMove(gameState, playerTurn);
-		}
+//		if(value == 0){
+//			return AgentController.findBestMove(gameState, playerTurn);
+//		}else if(value == 1){
+//			return AgentController.findSafeMove(gameState, playerTurn);
+//		}else if(value == 3){
+//			return AgentController.findRandomMove(gameState, playerTurn);
+//		}
 
 		return AgentController.findBestMove(gameState, playerTurn);
 	}
@@ -254,7 +267,7 @@ public class AgentController {
 	 * Example method which shows a greedy safe move finder algorithm: One step lookahead
 	 * @param currentState : The current state of the game
 	 * @param turn : The current turn give the state
-	 * @return : The safest move possible given a one step lookahead
+	 * @return : The safest move possible given a one-step lookahead
 	 */
 	public static MoveWrapper findSafeMove(GameBoardState currentState, PlayerTurn turn) {
 			
@@ -336,7 +349,7 @@ public class AgentController {
 		}
 		
 		//If in the context of the worst move of the adversary the resulting move the of agent has a lesser
-		//reward than the resulting move of the adversary the adversary moves are re-sorted using the adversary
+		//reward than the resulting move of the adversary moves are re-sorted using the adversary
 		//reward comparator.
 		if(adversaryMoves.get(0).getAgentMove().getPath().size() <= adversaryMoves.get(0).getHumanMove().getPath().size()){
 			
@@ -521,12 +534,13 @@ public class AgentController {
 				}
 			}
 		}
-		
+
+		// If all squares are occupied
 		if((agentPieces + humanPieces) == (state.getBoardSize() * state.getBoardSize())){
-			
-			if(agentPieces > humanPieces){
+
+			if(agentPieces > humanPieces){     // If agent has more pieces than human
 				return MAX_VALUE;
-			}else if(agentPieces < humanPieces){
+			}else if(agentPieces < humanPieces){     // If human has more pieces than agent
 				return MIN_VALUE;
 			}else{
 				return 0;
@@ -899,15 +913,13 @@ public class AgentController {
 			}
 		}
 		
-		
-		if((agentPieces + humanPieces) == (state.getBoardSize() * state.getBoardSize())){			
+		if((agentPieces + humanPieces) == (state.getBoardSize() * state.getBoardSize())){
 			return true;
 		}else{
 			if(getAvailableMoves(state, player).isEmpty()){
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	

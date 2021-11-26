@@ -19,7 +19,7 @@ public class UserSettings {
 	/**
 	 * If deepening logic is use please define here
 	 */
-	public static final DeepeningType DEEPENING = DeepeningType.NONE;
+	public static final DeepeningType DEEPENING = DeepeningType.DYNAMIC_DEEPENING;  // ändrat från none till dynamic
 	/**
 	 * Determines the game mode to use
 	 */
@@ -67,15 +67,15 @@ public class UserSettings {
 	 * The name must be less than 15 characters long
 	 * Any name with more than 14 characters will be cut off.
 	 */
-	public static final String PLAYER_ONE = "Player One";
+	public static final String PLAYER_ONE = "Sofia";
 	/**
 	 * The name of the player two : Black player
 	 * The name must be less than 15 characters long.
 	 * Any name with more than 14 characters will be cut off.
 	 */
-	public static final String PLAYER_TWO = "Player Two";
+	public static final String PLAYER_TWO = "Oscar";
 	/**
-	 * Determines whether or not animations should be used 
+	 * Determines whether animations should be used or not
 	 * The animations may reduce performance on some systems. 
 	 * Specially on systems running other OS than windows. This
 	 * is off by default.
@@ -97,7 +97,7 @@ public class UserSettings {
 	 * will be converted to the closest valid value
 	 * The default size of the Othello board is 8x8
 	 */
-	public static final int BOARD_GRID_SIZE = 8;
+	public static final int BOARD_GRID_SIZE = 4;
 	/**
 	 * The theme which is to be set to the board
 	 * There are a total of 14 available themes 
@@ -109,17 +109,17 @@ public class UserSettings {
 	/**
 	 * Weight from high to low. The higher the 
 	 * weight the higher the reward. Take a look at
-	 * the weight matrix insidet the AgentController to see how
+	 * the weight matrix inside the AgentController to see how
 	 * the weights are distributed. Feel free to modify
 	 * the weights in order to achieve desired heuristics
 	 */
-	public static final int A = 256;
+	public static final int A = 1000;
 	public static final int B = 128;
 	public static final int C = 64;
 	public static final int D = 8;
 	public static final int E = 4;
 	public static final int F = 2;
 	public static final int G = -128;
-	public static final int H = -256;
+	public static final int H = -1000;
 
 }

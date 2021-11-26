@@ -36,6 +36,7 @@ public class ExampleAgentA extends Agent{
 	 */
 	@Override
 	public AgentMove getMove(GameBoardState gameState) {
+
 		return getExampleMove(gameState);
 	}
 	

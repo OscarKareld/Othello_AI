@@ -36,7 +36,7 @@ public class GameBoardState {
 	
 	private GameBoard gameBoard;
 	
-	private ObjectiveWrapper leadingMove;
+	private ObjectiveWrapper leadingMove;  // The move which created this state
 
 	private GameBoardState parentState;
 	

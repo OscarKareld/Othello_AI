@@ -40,6 +40,7 @@ public class ExampleAgentOne extends Agent{
 	 */
 	@Override
 	public AgentMove getMove(GameBoardState gameState) {
+		System.out.println("ExampleAgentOne.getMove");
 		return getExampleMove(gameState);
 	}
 	

@@ -24,7 +24,7 @@ public class OthelloSettings {
 	public static final String STYLESHEET = "application.css";
 	public static final String GAME_NAME = "Othello";
 	
-	public static boolean DEBUG_GAME = false;
+	public static boolean DEBUG_GAME = false; // ändrat till true
 
 	public static final boolean USE_AI_AGENT =UserSettings.GAME_MODE == GameMode.HUMAN_VS_AGENT || UserSettings.GAME_MODE == GameMode.AGENT_VS_AGENT ;
 

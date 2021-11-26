@@ -35,7 +35,7 @@ public class Othello {
 	
 	private OthelloGameView othelloGameView;
 	
-	public Othello(Stage primaryStage, Agent agentOne, Agent agentTwo) {
+	public Othello(Stage primaryStage, Agent agentOne, Agent agentTwo) {  // Startar ett nytt spel
 		this.gameController = new GameController(this);
 		this.agentController = new AgentController(this, agentOne, agentTwo);
 		this.othelloGame = new OthelloGame(OthelloSettings.DEFAULT_BOARD_GRID_SIZE);

@@ -13,7 +13,7 @@ import com.eudycontreras.othello.capsules.MoveWrapper;
  * <H2>Class description</H2>
  * 
  * Example move template. You are welcome to use this move 
- * template to create your own move implementation but you are
+ * template to create your own move implementation, but you are
  * also welcome to use the already implemented {@link MoveWrapper} class.
  * Each implemented class must contain a moveIndex wrapper which 
  * encapsulates information about where to place the chip. A definition of 
