@@ -172,8 +172,7 @@ public class AgentController {
 			AgentMove move = agent.getMove(root); // SuperAgent och SuperMove returnerar ett AgentMove-objekt=move
 			System.out.println("move="+move);
 
-			SuperMove thisMove=(SuperMove) move;
-			System.out.println(thisMove.getScore());
+			AgentMove thisMove=agent.getMove(root);
 
 			othello.getGameController().passInformation(  // Skickar info för att uppdatera GUI? Uppdateras inte
 					agent.getSearchDepth(),				  // eftersom set-metoderna aldrig används är värdena noll
