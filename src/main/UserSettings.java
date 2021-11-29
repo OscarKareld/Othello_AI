@@ -19,7 +19,7 @@ public class UserSettings {
 	/**
 	 * If deepening logic is use please define here
 	 */
-	public static final DeepeningType DEEPENING = DeepeningType.DYNAMIC_DEEPENING;  // ändrat från none till dynamic
+	public static final DeepeningType DEEPENING = DeepeningType.NONE;
 	/**
 	 * Determines the game mode to use
 	 */
@@ -42,7 +42,7 @@ public class UserSettings {
 	 * has passed. Adjust in order for play consistency. when
 	 * Human vs Agent is activated.
 	 */
-	public static final int MIN_SEARCH_TIME = 0;
+	public static final int MIN_SEARCH_TIME = 2000;
 	
 	/**
 	 * Used for defining the search time
@@ -97,7 +97,7 @@ public class UserSettings {
 	 * will be converted to the closest valid value
 	 * The default size of the Othello board is 8x8
 	 */
-	public static final int BOARD_GRID_SIZE = 4;
+	public static final int BOARD_GRID_SIZE = 8;
 	/**
 	 * The theme which is to be set to the board
 	 * There are a total of 14 available themes 
@@ -113,13 +113,13 @@ public class UserSettings {
 	 * the weights are distributed. Feel free to modify
 	 * the weights in order to achieve desired heuristics
 	 */
-	public static final int A = 1000;
-	public static final int B = 128;
+	public static final int A = 500;
+	public static final int B = 250;
 	public static final int C = 64;
 	public static final int D = 8;
 	public static final int E = 4;
 	public static final int F = 2;
-	public static final int G = -128;
-	public static final int H = -1000;
+	public static final int G = -250;
+	public static final int H = -500;
 
 }

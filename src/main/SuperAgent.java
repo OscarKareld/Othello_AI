@@ -38,9 +38,6 @@ public class SuperAgent extends Agent {
     public AgentMove getNextMove(GameBoardState gameBoardState) {
         SuperMove newMove=new SuperMove(gameBoardState);
         return miniMax(gameBoardState, 2, PlayerTurn.PLAYER_ONE, newMove);
-
-        //Retrieves and stores all moves for specified player given the current state of the game
-        //List<ObjectiveWrapper> agentMoves = getAvailableMoves(currentState, turn);
     }
 
     private SuperMove miniMax(GameBoardState state, int depth, PlayerTurn player, SuperMove newMove) {
@@ -54,7 +51,6 @@ public class SuperAgent extends Agent {
         }
         if(player.equals(PlayerTurn.PLAYER_ONE)) { // maxdrag
             for (ObjectiveWrapper move:possibleMoves) {
-                //miniMax(AgentController.getNewState(gameBoardState,move));
                 evaluatedMoves.add(miniMax(AgentController.getNewState(state,move), depth-1, player, newMove));
                 Collections.sort(evaluatedMoves, Collections.reverseOrder());
                 return evaluatedMoves.getFirst();
@@ -63,7 +59,6 @@ public class SuperAgent extends Agent {
 
         if(player.equals(PlayerTurn.PLAYER_TWO)) { // mindrag
             for (ObjectiveWrapper move:possibleMoves) {
-                //miniMax(AgentController.getNewState(gameBoardState,move));
                 evaluatedMoves.add(miniMax(AgentController.getNewState(state,move), depth-1, player, newMove));
                 Collections.sort(evaluatedMoves);
                 return evaluatedMoves.getFirst();
