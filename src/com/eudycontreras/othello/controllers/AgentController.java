@@ -170,9 +170,8 @@ public class AgentController {
 			// Hit kommer man varje gång agenten gör ett drag
 
 			AgentMove move = agent.getMove(root); // SuperAgent och SuperMove returnerar ett AgentMove-objekt=move
-			System.out.println("move="+move);
 
-			AgentMove thisMove=agent.getMove(root);
+			//AgentMove thisMove=agent.getMove(root);
 
 			othello.getGameController().passInformation(  // Skickar info för att uppdatera GUI? Uppdateras inte
 					agent.getSearchDepth(),				  // eftersom set-metoderna aldrig används är värdena noll
@@ -193,7 +192,6 @@ public class AgentController {
 			Platform.runLater(() -> {
 				if(move != null){
 					othello.getGameController().setAgentMove(agentTurn,move);
-					System.out.println("ute på andra sidan?");
 				}
 			});
 		});
