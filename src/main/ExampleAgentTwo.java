@@ -29,12 +29,7 @@ public class ExampleAgentTwo extends Agent{
 	public ExampleAgentTwo(String name) {
 		super(name, PlayerTurn.PLAYER_TWO);
 	}
-
-	@Override
-	public int getUtility(GameBoardState state) {
-		return 0;
-	}
-
+	
 	public ExampleAgentTwo(PlayerTurn playerTurn) {
 		super(playerTurn);
 		// TODO Auto-generated constructor stub

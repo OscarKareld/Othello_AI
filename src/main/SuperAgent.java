@@ -113,9 +113,4 @@ public class SuperAgent extends Agent {
     public void setPrunedCounter(int prunedCounter) {
         this.prunedCounter = prunedCounter;
     }
-
-    @Override
-    public int getUtility(GameBoardState state) {
-        return 0;
-    }
 }

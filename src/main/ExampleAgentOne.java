@@ -29,12 +29,7 @@ public class ExampleAgentOne extends Agent{
 	public ExampleAgentOne(String name) {
 		super(name, PlayerTurn.PLAYER_ONE);
 	}
-
-	@Override
-	public int getUtility(GameBoardState state) {
-		return 0;
-	}
-
+	
 	public ExampleAgentOne(PlayerTurn playerTurn) {
 		super(playerTurn);
 	

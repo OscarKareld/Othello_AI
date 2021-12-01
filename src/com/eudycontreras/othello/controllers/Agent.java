@@ -1,7 +1,6 @@
 package com.eudycontreras.othello.controllers;
 
 import com.eudycontreras.othello.enumerations.PlayerTurn;
-import com.eudycontreras.othello.models.GameBoardState;
 
 /**
  * <H2>Created by</h2> Eudy Contreras
@@ -108,6 +107,5 @@ public abstract class Agent implements IAgentMove {
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
 	}
-
-    public abstract int getUtility(GameBoardState state);
+	
 }
