@@ -177,7 +177,8 @@ public class AgentController {
 					agent.getSearchDepth(),				  // eftersom set-metoderna aldrig används är värdena noll
 					agent.getReachedLeafNodes(),
 					agent.getPrunedCounter(), 
-					agent.getNodesExamined());
+					agent.getNodesExamined(),
+					agent.getUtility(root));
 
 			if(OthelloSettings.DEBUG_GAME){
 				System.out.println("SEARCH DEPTH: " + agent.getSearchDepth());

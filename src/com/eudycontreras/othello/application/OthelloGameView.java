@@ -564,6 +564,10 @@ public class OthelloGameView{
 			gameInfoView.updateInfo(3, String.valueOf(leafCounter));
 			gameInfoView.updateInfo(4, String.valueOf(nodesExamined));
 		}
+		@Override
+		public void displayUtility(int utility) {
+			gameInfoView.updateInfo(0, String.valueOf(utility));
+		}
 
 		@Override
 		public void showOnConsole(Object obj) {

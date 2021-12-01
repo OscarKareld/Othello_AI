@@ -34,6 +34,8 @@ public class AgentMax extends Agent {
         super(agentName, playerTurn);
     }
 
+
+
     @Override
     public AgentMove getMove(GameBoardState state) {
         nbrOfExploredNodes=0;
@@ -128,6 +130,11 @@ public class AgentMax extends Agent {
                 }
             }
         return evaluation;
+    }
+
+    @Override
+    public int getUtility(GameBoardState state) {
+        return evaluation(state);
     }
 }
 

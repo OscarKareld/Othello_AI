@@ -566,7 +566,7 @@ public class GameController {
 			othelloGame.getGameBoard().resetBoard();
 			currentTurn = PlayerTurn.PLAYER_ONE;
 			
-			passInformation(0,0,0,0);
+			passInformation(0,0,0,0, 0);
 			
 			computeAvailableMoves(PlayerType.PLAYER_ONE, BoardCellState.WHITE);
 			computeAvailableMoves(PlayerType.PLAYER_TWO, BoardCellState.BLACK);
@@ -678,7 +678,8 @@ public class GameController {
 		}
 	}
 
-	public void passInformation(int depthCounter, int leafCounter, int pruneCounter, int nodesExamined) {
+	public void passInformation(int depthCounter, int leafCounter, int pruneCounter, int nodesExamined, int utility) {
 		callbackController.displayInformation(depthCounter, leafCounter, pruneCounter, nodesExamined);
+		callbackController.displayUtility(utility);
 	}
 }

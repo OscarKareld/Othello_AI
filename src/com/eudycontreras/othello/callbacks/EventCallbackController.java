@@ -44,6 +44,8 @@ public interface EventCallbackController {
 
 	void displayInformation(int depthCounter, int leafCounter, int pruneCounter, int nodesExamined);
 
+	void displayUtility(int utility);
+
 	void showOnConsole(Object obj);
 
 

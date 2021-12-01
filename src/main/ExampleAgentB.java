@@ -31,6 +31,11 @@ public class ExampleAgentB extends Agent{
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public int getUtility(GameBoardState state) {
+		return 0;
+	}
+
 	/**
 	 * Delete the content of this method and Implement your logic here!
 	 */
