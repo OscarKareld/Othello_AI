@@ -67,7 +67,7 @@ public class AgentMax extends Agent {
         nbrOfExploredNodes++;
         List<ObjectiveWrapper> possibleMoves = AgentController.getAvailableMoves(state, playerTurn);
 
-        if (cutOff(state,depth))
+        if (cutOff(state,depth)) // || UserSettings.MAX_SEARCH_TIME) TODO: Kolla tiden här?
             return evaluation(state);
 
         if (possibleMoves.isEmpty())

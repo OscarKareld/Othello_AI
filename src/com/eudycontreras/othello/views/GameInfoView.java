@@ -54,7 +54,7 @@ public class GameInfoView extends VBox {
     }    
     
     private void setLabels(){
-    	setName(0, "State");
+    	setName(0, "Evaluation");
     	setName(1, "Search Depth");
     	setName(2, "Nodes Pruned");
     	setName(3, "Leafs Reached");
@@ -79,7 +79,7 @@ public class GameInfoView extends VBox {
 		infoPanels[0].getChildren().add(0, graphic);
 		
 		infoContent[0].setFont(Font.font(null, FontWeight.BOLD, 18));
-    	infoContent[0].setText("State of game");
+    	infoContent[0].setText("Utility score");
 		
     	infoPanels[5].setPrefHeight(100 + (50 * 4));
     	
