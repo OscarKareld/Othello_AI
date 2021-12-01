@@ -20,6 +20,7 @@ public class AgentMax extends Agent {
     private int nbrOfExploredNodes;
     private int nbrOfPrunedBranches;
     private int searchDepth;
+    private long startTime;
 
     public AgentMax(PlayerTurn playerTurn) {
         super(playerTurn);
@@ -37,9 +38,9 @@ public class AgentMax extends Agent {
     public AgentMove getMove(GameBoardState state) {
         nbrOfExploredNodes=0;
         nbrOfPrunedBranches=0;
-        searchDepth=4;
+        searchDepth=10;
 
-        double startTime=System.nanoTime();
+        startTime=System.currentTimeMillis();
         int maxScore=Integer.MIN_VALUE;
         MoveWrapper bestMove = new MoveWrapper(null);
 
@@ -56,9 +57,9 @@ public class AgentMax extends Agent {
         super.setSearchDepth(searchDepth);
         super.setNodesExamined(nbrOfExploredNodes);
         super.setPrunedCounter(nbrOfPrunedBranches);
-        double stopTime=System.nanoTime();
+        double stopTime=System.currentTimeMillis();
         DecimalFormat df = new DecimalFormat("####0.000");
-        double executionTime=(stopTime-startTime)*Math.pow(10, -9);
+        double executionTime=(stopTime-startTime)*Math.pow(10, -3);
         System.out.println(df.format(executionTime));
         return bestMove ;
     }
@@ -67,7 +68,7 @@ public class AgentMax extends Agent {
         nbrOfExploredNodes++;
         List<ObjectiveWrapper> possibleMoves = AgentController.getAvailableMoves(state, playerTurn);
 
-        if (cutOff(state,depth)) // || UserSettings.MAX_SEARCH_TIME) TODO: Kolla tiden här?
+        if (cutOff(state,depth))
             return evaluation(state);
 
         if (possibleMoves.isEmpty())
@@ -107,6 +108,8 @@ public class AgentMax extends Agent {
         if(state.isTerminal())
             return true;
         if(depth==searchDepth)
+            return true;
+        if (AgentController.timeLimitExceeded(UserSettings.MAX_SEARCH_TIME, startTime))
             return true;
         else
             return false;
