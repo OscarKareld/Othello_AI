@@ -38,7 +38,7 @@ public class AgentMax extends Agent {
     public AgentMove getMove(GameBoardState state) {
         nbrOfExploredNodes=0;
         nbrOfPrunedBranches=0;
-        searchDepth=10;
+        searchDepth=6;
 
         startTime=System.currentTimeMillis();
         int maxScore=Integer.MIN_VALUE;
@@ -109,10 +109,7 @@ public class AgentMax extends Agent {
             return true;
         if(depth==searchDepth)
             return true;
-        if (AgentController.timeLimitExceeded(UserSettings.MAX_SEARCH_TIME, startTime))
-            return true;
-        else
-            return false;
+        return AgentController.timeLimitExceeded(UserSettings.MAX_SEARCH_TIME, startTime);
     }
 
     private int evaluation(GameBoardState state) {
